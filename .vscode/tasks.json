@@ -1,0 +1,14 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "lint-build",
+			"type": "shell",
+			"command": "npm run lint && npm run build",
+			"group": "build",
+			"problemMatcher": [
+				"$eslint-stylish"
+			]
+		}
+	]
+}
