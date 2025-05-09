@@ -44,13 +44,20 @@ export function generateId(): string {
 /**
  * Debounce function
  */
-export function debounce<T extends (...args: any[]) => any>(
-  fn: T,
-  ms: number
+/**
+ * Debounce a function to limit how often it can fire.
+ * @template T
+ * @param fn - The function to debounce
+ * @param ms - The debounce delay in milliseconds
+ * @returns A debounced version of the function
+ */
+export function debounce<T extends (...args: unknown[]) => void>(
+    fn: T,
+    ms: number
 ): (...args: Parameters<T>) => void {
-  let timeoutId: ReturnType<typeof setTimeout>;
-  return function (this: any, ...args: Parameters<T>) {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => fn.apply(this, args), ms);
-  };
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    return function (this: unknown, ...args: Parameters<T>) {
+        if (timeoutId) clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => fn.apply(this, args), ms);
+    };
 }
